@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <script src="./js/index.js"></script>
+
+        <title>OurGallery</title>
+    </head>
+    <body>
+
+      <!-- Página uno, entrada -->
+      <div data-role="page" id="pageone" >
+
+        <section class="app">
+        </section>
+        <h1 id="title" >Welcome to your Gallery</h1>
+        <div data-role="main"  class="ui-content">
+          <a href="#pagetwo" class="ui-btn" data-transition="pop">Entrar</a>
+        </div>
+      </div>
+
+      <!-- Página dos, menú -->
+      <div data-role="page" id="pagetwo">
+
+        <div data-role="header">
+          <h1>Menú Principal</h1>
+        </div>
+
+        <!-- Descripción de la aplicación -->
+        <div data-role="panel" id="panelDesc">
+            <h2>Our Gallery</h2>
+            <p>Esta aplicación se trata de una simple galería de fotos.
+            Lo que pretendemos con esto es que no solo tengas mejor
+            organizados tus fotos si no que además guardes tus momentos
+            en su totalidad, lugar de la foto, título, etc.</p>
+        </div>
+
+        <div data-role="main" class="ui-content">
+          <a href="#panelDesc" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Descripción</a>
+        </div>
+
+        <!-- Sacar foto -->
+        <div data-role="panel" id="panelFoto">
+            <h2>¡Inmortaliza tus mejores momentos!</h2>
+            <p>Esta opción te permite sacar tus fotos y guardarlas. ¡Añadele detalles como podría ser la posición donde la sacaste!</p>
+        </div>
+
+        <div data-role="main" class="ui-content">
+          <a href="#pagethree" class="ui-btn ui-btn-inline ui-corner-all ui-shadow"> Sacar foto </a>
+          <a href="#panelFoto" >Más información..</a>
+        </div>
+
+        <!-- Galería -->
+        <div data-role="panel" id="panelGal">
+            <h2>¡El baúl de los recuerdos!</h2>
+            <p>Rememora todos tus recuerdos, aquí tienes todas las fotos que merecen la pena guardar, ¡Los momentos del pasado han hecho que seas la persona que eres!</p>
+        </div>
+
+        <div data-role="main" class="ui-content">
+          <a href="#pagefour" class="ui-btn ui-btn-inline ui-corner-all ui-shadow"> Mi Galería </a>
+          <a href="#panelGal" >Más información..</a>
+        </div>
+
+        <!-- Desarrolladores -->
+        <div data-role="main" class="ui-content">
+          <div data-role="collapsible">
+            <h1>Desarrolladores</h1>
+            <ul data-role="listview" data-inset="true">
+              <li>Adrián Calzadilla González</li>
+              <li>Kevin Martín Chinea</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class= "footer" data-role="footer">
+          <p>Copyright © Todos los Derechos Reservados</p>
+        </div>
+
+      </div>
+
+      <!-- Página tres, sacar foto -->
+      <div data-role="page" id="pagethree">
+
+        <div data-role="header">
+          <a href="#pagetwo" class="ui-btn ui-btn-left ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
+          <h1>Sacar foto</h1>
+        </div>
+
+        <section>
+          <h1> SACAMOS LA FOTO AQUÍ </h1>
+
+
+          <button onclick="showPosition()"> Mostrar ubicacion </button>
+          <p id = "geolocation"></p>
+
+          <button onclick="capturePhoto();">Capturar Foto</button>
+
+            <div> <img id="myImage" style="transform:  rotate(90deg);"src="" /> </div>
+            <div id="map"></div>
+
+          <div class= "footer" data-role="footer">
+            <p>Copyright © Todos los Derechos Reservados</p>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Página cuatro, galería de imagenes -->
+      <div data-role="page" id="pagefour" >
+
+        <div data-role="header">
+          <a href="#pagetwo" class="ui-btn ui-btn-left ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
+          <h1>Mi Galería</h1>
+        </div>
+
+        <h1> GALERÍA DE NUESTRAS FOTOS </h1>
+
+        <div class= "footer" data-role="footer">
+          <p>Copyright © Todos los Derechos Reservados</p>
+        </div>
+
+      </div>
+
+    <script type="text/javascript" src = "cordova.js"></script>
+    </body>
+</html>
