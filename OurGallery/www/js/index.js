@@ -100,6 +100,8 @@ function onSuccess(position){
 
 var pictureSource;
 var destinationType;
+var descripcion;
+var myImage;
 
 document.addEventListener("deviceready",onDeviceReady,false);
 
@@ -116,25 +118,48 @@ function capturePhoto(){
 
 function onPhotoFileSuccess(imageData){
 
-  console.log(JSON.stringify(imageData));
-
-  var myImage = document.getElementById('myImage');
+  myImage = document.getElementById('myImage');
 
   myImage.style.display = 'block';
 
   myImage.src = imageData;
-}
 
-function getPhoto(source){
-
-  navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-    quality: 50,
-    destinationType: destinationType.FILE_URI,
-    sourceType: source
-  });
+  uploadPhoto(imageData);
 }
 
 function onFail(message){
 
   alert('Failed because: ' + message);
+}
+
+function uploadPhoto(imageURI) {
+    //If you wish to display image on your page in app
+    // Get image handle
+    var userid = '123456';
+
+    var options = new FileUploadOptions();
+    options.fileKey = "file";    //Tipo del campo que recibirá el servidor. Tipo post, get ...
+    var imageFileName = userid + Number(new Date()) + ".jpg";
+    options.fileName = imageFileName;
+    options.mimeType = "image/jpg";
+
+    var params = new Object();  //Objeto que tendrá los datos que pasaremos al servidor.
+    params.descripcion = " Esta es la descripcion de la foto.";
+    //params.imageURI = imageURI;
+    //params.userid = sessionStorage.loginuserid;
+    options.params = params;
+    options.chunkedMode = true; //Envío del archivo a trocitos, poco a poco.
+
+    var ft = new FileTransfer();
+    var url = "http://192.168.3.116:8888/phoneFotos/subir.php";
+    ft.upload(imageURI, url, win, fail, options);
+}
+
+//Success callback
+function win(r) {
+    alert("Image uploaded successfully!! "+r.response);
+}
+//Failure callback
+function fail(error) {
+    alert("There was an error uploading image");
 }
