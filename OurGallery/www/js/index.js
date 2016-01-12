@@ -151,7 +151,9 @@ function uploadPhoto(imageURI) {
     options.chunkedMode = true; //Envío del archivo a trocitos, poco a poco.
 
     var ft = new FileTransfer();
-    var url = "http://192.168.3.116:8888/phoneFotos/subir.php";
+    //var url = "http://192.168.3.116:8888/phoneFotos/subir.php";
+    var url = "http://192.168.3.165:8888/phoneFotos/subir.php";
+    //var url = "http://photoprueba-ullalu.rhcloud.com/subir.php";
     ft.upload(imageURI, url, win, fail, options);
 }
 
@@ -162,4 +164,63 @@ function win(r) {
 //Failure callback
 function fail(error) {
     alert("There was an error uploading image");
+}
+
+function downloadImg(){
+    $("#btnBajar").click(function(e) {
+        e.preventDefault();
+        // Un mensaje de estado
+        $("#divConsulta").html("Obteniendo los datos - esperando...");
+        // Hacemos un peticion web y obtenemos la data
+        //var urlBajar = "http://192.168.3.165:8888/phoneFotos/descargar.php";
+        //var urlBajar = "http://192.168.3.165:8888/phoneFotos/bajar.php";
+        var urlBajar = "http://photoprueba-ullalu.rhcloud.com/bajar.php";
+        $.get(urlBajar, {}, function(data) {
+            // Cargamos la data dentro de la etiqueta div
+            $("#divConsulta").html(data);
+        })
+    });
+}
+
+// ----------------------------------------------------------------------------
+//Descargar archivos
+function downloadImages() {
+  //var URL = "http://10.159.2.124:8888/phoneFotos/fotos";
+  var URL = "http://photoprueba-ullalu.rhcloud.com";
+  var fileName = "prueba.jpg";
+  //Parameters mismatch check
+  if (URL == null && File_Name == null) {
+      alert("Parámetro en null: "+URL+", "+File_Name);
+      return;
+  }
+  else {
+      //checking Internet connection availablity
+      var networkState = navigator.connection.type;
+      if (networkState == Connection.NONE) {
+          alert("Falla conexión");
+          return;
+      }
+      else {
+          download(URL,fileName); //If available download function call
+    }
+  }
+}
+
+function download(URL,fileName) {
+
+  var urli = "http://photoprueba-ullalu.rhcloud.com/fotos/prueba.jpg";
+  var uri = encodeURI(urli);
+
+  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
+
+      var imagePath = fs.root.toURL()+fileName;
+      alert(fs.root.toURL());    //   file:///data/data/com.adobe.phonegap.app/files/files/
+      var fileTransfer = new FileTransfer();
+      fileTransfer.download(uri,imagePath,function(entry){
+        alert("entry.fullPath = " + entry.fullPath);
+        document.getElementById('divConsulta').innerHTML = '<p>'+entry.fullPath+'</p>'+'<img src="'+imagePath+'" alt="No cargó la imagen" class="fGaleria">'
+      }, function(error){
+        alert("Error: "+ error.code);
+      });
+  });
 }
