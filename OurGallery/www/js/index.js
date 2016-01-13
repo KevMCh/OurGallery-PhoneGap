@@ -159,7 +159,9 @@ function uploadPhoto(imageURI) {
     options.mimeType = "image/jpg";
 
     var params = new Object();  //Objeto que tendrá los datos que pasaremos al servidor.
-    params.descripcion = "Nombre: " + imageFileName + document.getElementById('geolocation');
+    var cadena = document.getElementById('geolocation').textContent;
+    params.descripcion =  cadena;
+    alert("Alert descripcion: "+ params.descripcion);
     //params.imageURI = imageURI;
     //params.userid = sessionStorage.loginuserid;
     options.params = params;
@@ -167,13 +169,14 @@ function uploadPhoto(imageURI) {
 
     var ft = new FileTransfer();
 
-    var url = "http://photoprueba-ullalu.rhcloud.com/subir.php";
+    //var url = "http://photoprueba-ullalu.rhcloud.com/subir.php";
+    var url = "http://10.159.2.124:8888/phoneFotos/subir.php";
     ft.upload(imageURI, url, win, fail, options);
 }
 
 //Success callback
 function win(r) {
-    //alert("Image uploaded successfully!! "+r.response);
+    alert("Image uploaded successfully!! "+r.response);
 }
 //Failure callback
 function fail(error) {
@@ -191,7 +194,8 @@ function downloadLocation(n){
     document.getElementById("map"+n).classList.add('mapa');
     document.getElementById("map"+n).classList.add('vis');
 
-    var urlBajar = "http://photoprueba-ullalu.rhcloud.com/localization.php"
+    //var urlBajar = "http://photoprueba-ullalu.rhcloud.com/localization.php"
+    var urlBajar = "http://10.159.2.124:8888/phoneFotos/localization.php";
     pasarVariable(urlBajar, n);
 
   }else{
@@ -206,7 +210,7 @@ function downloadLocation(n){
 }
 
 function pasarVariable(urlBajar, n){
-
+  
   var regexp = /^\s*([\w|\d]+\.jpg)\s([-+]?\d+(?:.\d+)?)\s([-+]?\d+(?:.\d+)?)\s*$/i;
   var m;
   var response;
@@ -216,7 +220,7 @@ function pasarVariable(urlBajar, n){
   $.get(urlBajar, {name: n}, function(r, status){
     response = r;
     m = response.match(regexp); //Funcion match pone los resultados en un array.
-    alert("Variable m[1]: "+m[1] + "Variable m[2]: "+m[2] + "Variable m[3]: "+m[3]);
+    //alert("Variable m[1]: "+m[1] + "Variable m[2]: "+m[2] + "Variable m[3]: "+m[3]);
 
     lat = m[2];
     lng = m[3];
@@ -228,11 +232,12 @@ function pasarVariable(urlBajar, n){
 
 //Descargar archivos
 function downloadImages(n) {
-  var URL = "http://photoprueba-ullalu.rhcloud.com";
-  var fileName = "prueba.jpg";
+  //var URL = "http://photoprueba-ullalu.rhcloud.com";
+  var URL = "http://10.159.2.124:8888/phoneFotos/fotos";
+  var fileName = n;
   //Parameters mismatch check
-  if (URL == null && File_Name == null) {
-      alert("Parámetro en null: "+URL+", "+File_Name);
+  if (URL == null && fileName == null) {
+      alert("Parámetro en null: "+URL+", "+fileName);
       return;
   }
   else {
@@ -244,8 +249,8 @@ function downloadImages(n) {
       }
       else {
 
-          star = $.getJSON('http://photoprueba-ullalu.rhcloud.com/bajar.php', function(data){
-
+          //star = $.getJSON('http://photoprueba-ullalu.rhcloud.com/bajar.php', function(data){
+          star = $.getJSON('http://10.159.2.124:8888/phoneFotos/bajar.php', function(data){
             document.getElementById('divConsulta').innerHTML = "";
             for(var i=0; i<data.length; i++){
 
@@ -259,7 +264,8 @@ function downloadImages(n) {
 
 function download(URL,fileName) {
 
-  var urli = "http://photoprueba-ullalu.rhcloud.com/fotos/" + fileName;
+  //var urli = "http://photoprueba-ullalu.rhcloud.com/fotos/" + fileName;
+  var urli = "http://10.159.2.124:8888/phoneFotos/fotos/" + fileName;
   var uri = encodeURI(urli);
 
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
