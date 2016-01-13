@@ -111,7 +111,15 @@ h1 {
     margin-bottom: 20px;
 }
 
+.mapa{
+  width: 200px;
+  height: 200px;
+
+  border: solid;
+}
+
 #map{
+
   width: 200px;
   height: 200px;
 
@@ -120,6 +128,7 @@ h1 {
   top:75%;
 
   border: solid;
+
 }
 
 #myImage{
@@ -141,4 +150,13 @@ h1 {
 .fGaleria {
     width: 200px;
     height: 200px;
+}
+
+.ocul {
+
+  display:none;
+}
+.vis {
+
+  display:block;
 }

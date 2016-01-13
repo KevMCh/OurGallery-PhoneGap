@@ -53,10 +53,27 @@ var app = {
 var map;
 var marcador;
 
-function initialize() {
+function initialize(){
+
   var mapCanvas = document.getElementById('map');
   var mapOptions = {
     center: new google.maps.LatLng(44.5403, -78.5463),
+    zoom: 8,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+  map = new google.maps.Map(mapCanvas, mapOptions)
+
+  marcador = new google.maps.Marker({
+    position:LatLng,
+    map: map
+  })
+}
+
+function setLocalization(map, lat, lng){
+
+  var mapCanvas = document.getElementById(map);
+  var mapOptions = {
+    center: new google.maps.LatLng(lat, lng),
     zoom: 8,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }
@@ -79,9 +96,7 @@ function onSuccess(position){
   map.setCenter(myposition)
 
   var element = document.getElementById('geolocation');
-  element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br>' +
-                      'Longitude: ' + position.coords.longitude     + '<br>' +
-                      ' ';
+  element.innerHTML = position.coords.latitude + ' ' + position.coords.longitude + ' ';
 
   marcador.setPosition(myposition)
 }
@@ -144,15 +159,14 @@ function uploadPhoto(imageURI) {
     options.mimeType = "image/jpg";
 
     var params = new Object();  //Objeto que tendrá los datos que pasaremos al servidor.
-    params.descripcion = " Esta es la descripcion de la foto.";
+    params.descripcion = "Nombre: " + imageFileName + document.getElementById('geolocation');
     //params.imageURI = imageURI;
     //params.userid = sessionStorage.loginuserid;
     options.params = params;
     options.chunkedMode = true; //Envío del archivo a trocitos, poco a poco.
 
     var ft = new FileTransfer();
-    //var url = "http://192.168.3.116:8888/phoneFotos/subir.php";
-    //var url = "http://192.168.3.165:8888/phoneFotos/subir.php";
+
     var url = "http://photoprueba-ullalu.rhcloud.com/subir.php";
     ft.upload(imageURI, url, win, fail, options);
 }
@@ -166,29 +180,54 @@ function fail(error) {
     alert("There was an error uploading image");
 }
 
-function downloadLocation(){
+function downloadLocation(n){
 
-alert("Descargando ubicación");
+  if(document.getElementById(n).classList.contains('vis')){
 
-    $("#btnBajar").click(function(e) {
-        e.preventDefault();
-        // Un mensaje de estado
-        $("#divConsulta").html("Obteniendo los datos - esperando...");
-        // Hacemos un peticion web y obtenemos la data
-        //var urlBajar = "http://192.168.3.165:8888/phoneFotos/descargar.php";
-        //var urlBajar = "http://192.168.3.165:8888/phoneFotos/bajar.php";
-        var urlBajar = "http://photoprueba-ullalu.rhcloud.com/bajar.php";
-        $.get(urlBajar, {}, function(data) {
-            // Cargamos la data dentro de la etiqueta div
-            $("#divConsulta").html(data);
-        })
-    });
+    document.getElementById(n).classList.remove('vis');
+    document.getElementById(n).classList.add('ocul');
+
+    document.getElementById("map"+n).classList.remove('ocul');
+    document.getElementById("map"+n).classList.add('mapa');
+    document.getElementById("map"+n).classList.add('vis');
+
+    var urlBajar = "http://photoprueba-ullalu.rhcloud.com/localization.php"
+    pasarVariable(urlBajar, n);
+
+  }else{
+
+    document.getElementById(n).classList.remove('ocul');
+    document.getElementById(n).classList.add('vis');
+
+    document.getElementById("map"+n).classList.remove('mapa');
+    document.getElementById("map"+n).classList.remove('vis');
+    document.getElementById("map"+n).classList.add('ocul');
+  }
 }
 
-// ----------------------------------------------------------------------------
+function pasarVariable(urlBajar, n){
+
+  var regexp = /^\s*([\w|\d]+\.jpg)\s([-+]?\d+(?:.\d+)?)\s([-+]?\d+(?:.\d+)?)\s*$/i;
+  var m;
+  var response;
+  var lat = 44.5403;
+  var lng = -78.5463;
+
+  $.get(urlBajar, {name: n}, function(r, status){
+    response = r;
+    m = response.match(regexp); //Funcion match pone los resultados en un array.
+    alert("Variable m[1]: "+m[1] + "Variable m[2]: "+m[2] + "Variable m[3]: "+m[3]);
+
+    lat = m[2];
+    lng = m[3];
+
+    setLocalization("map"+n, lat, lng);
+
+  }, "text");
+}
+
 //Descargar archivos
-function downloadImages() {
-  //var URL = "http://10.159.2.124:8888/phoneFotos/fotos";
+function downloadImages(n) {
   var URL = "http://photoprueba-ullalu.rhcloud.com";
   var fileName = "prueba.jpg";
   //Parameters mismatch check
@@ -229,7 +268,7 @@ function download(URL,fileName) {
       var fileTransfer = new FileTransfer();
       fileTransfer.download(uri,imagePath,function(entry){
         var x = document.getElementById('divConsulta').innerHTML;
-        document.getElementById('divConsulta').innerHTML = x + '<p>'+entry.fullPath+'</p>'+'<img src="'+imagePath+'" onClick = "downloadLocation()" style="transform: rotate(90deg);" alt="No cargó la imagen" class="fGaleria"> <br>'
+        document.getElementById('divConsulta').innerHTML = x + '<p>'+entry.fullPath+'</p>'+'<img id="'+ entry.name + '" src="'+imagePath+'" onClick = "downloadLocation(\''+entry.name+'\')" style="transform: rotate(90deg);" alt="No cargó la imagen" class="fGaleria"> <br> <div id="map'+entry.name+'" onClick = "downloadLocation(\''+entry.name+'\')"></div> <br>'
       }, function(error){
         alert("Error: "+ error.code);
       });
