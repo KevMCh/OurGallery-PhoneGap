@@ -53,7 +53,7 @@
         </div>
 
         <div data-role="main" class="ui-content">
-          <a href="#pagethree" class="ui-btn ui-btn-inline ui-corner-all ui-shadow"> Sacar foto </a>
+          <a href="#pagethree" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showPosition()"> Sacar foto </a>
           <a href="#panelFoto" >Más información..</a>
         </div>
 
@@ -64,7 +64,7 @@
         </div>
 
         <div data-role="main" class="ui-content">
-          <a href="#pagefour" class="ui-btn ui-btn-inline ui-corner-all ui-shadow"> Mi Galería </a>
+          <a href="#pagefour" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="downloadImages();"> Mi Galería </a>
           <a href="#panelGal" >Más información..</a>
         </div>
 
@@ -94,17 +94,14 @@
         </div>
 
         <section>
-          <h1> SACAMOS LA FOTO AQUÍ </h1>
 
 
-          <button onclick="showPosition()"> Mostrar ubicacion </button>
-          <p id = "geolocation"></p>
-
-          <button onclick="capturePhoto();">Capturar Foto</button>
+          <button id="capFoto" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto();"> Capturar Foto</button>
 
             <!--<div> <img id="myImage" style="transform:  rotate(90deg);"src="" /> </div>-->
             <div> <img id="myImage" style="transform:  rotate(90deg);" src="" /> </div>
             <div id="map"></div>
+            <p id = "geolocation"></p>
 
           <div class= "footer" data-role="footer">
             <p>Copyright © Todos los Derechos Reservados</p>
@@ -121,10 +118,7 @@
           <h1>Mi Galería</h1>
         </div>
 
-        <h1> GALERÍA DE NUESTRAS FOTOS </h1>
-
-        <button id="btnBajar" onclick="downloadImages();">Descarga las fotos</button>
-        <h3>Imagenes de tu galería:</h3>
+        <h1> GALERÍA DE FOTOS </h1>
         <div id="divConsulta"></div>
 
         <div class= "footer" data-role="footer">

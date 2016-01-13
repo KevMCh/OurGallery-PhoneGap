@@ -132,6 +132,12 @@ h1 {
 
 }
 
+#capFoto{
+
+  margin: auto;
+  margin-left: 25%;
+}
+
 .fGaleria {
     width: 200px;
     height: 200px;

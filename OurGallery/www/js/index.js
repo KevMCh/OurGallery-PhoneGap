@@ -152,21 +152,24 @@ function uploadPhoto(imageURI) {
 
     var ft = new FileTransfer();
     //var url = "http://192.168.3.116:8888/phoneFotos/subir.php";
-    var url = "http://192.168.3.165:8888/phoneFotos/subir.php";
-    //var url = "http://photoprueba-ullalu.rhcloud.com/subir.php";
+    //var url = "http://192.168.3.165:8888/phoneFotos/subir.php";
+    var url = "http://photoprueba-ullalu.rhcloud.com/subir.php";
     ft.upload(imageURI, url, win, fail, options);
 }
 
 //Success callback
 function win(r) {
-    alert("Image uploaded successfully!! "+r.response);
+    //alert("Image uploaded successfully!! "+r.response);
 }
 //Failure callback
 function fail(error) {
     alert("There was an error uploading image");
 }
 
-function downloadImg(){
+function downloadLocation(){
+
+alert("Descargando ubicación");
+
     $("#btnBajar").click(function(e) {
         e.preventDefault();
         // Un mensaje de estado
@@ -201,24 +204,32 @@ function downloadImages() {
           return;
       }
       else {
-          download(URL,fileName); //If available download function call
+
+          star = $.getJSON('http://photoprueba-ullalu.rhcloud.com/bajar.php', function(data){
+
+            document.getElementById('divConsulta').innerHTML = "";
+            for(var i=0; i<data.length; i++){
+
+              download(URL,data[i]); //If available download function call
+
+            }
+          });
     }
   }
 }
 
 function download(URL,fileName) {
 
-  var urli = "http://photoprueba-ullalu.rhcloud.com/fotos/prueba.jpg";
+  var urli = "http://photoprueba-ullalu.rhcloud.com/fotos/" + fileName;
   var uri = encodeURI(urli);
 
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
 
       var imagePath = fs.root.toURL()+fileName;
-      alert(fs.root.toURL());    //   file:///data/data/com.adobe.phonegap.app/files/files/
       var fileTransfer = new FileTransfer();
       fileTransfer.download(uri,imagePath,function(entry){
-        alert("entry.fullPath = " + entry.fullPath);
-        document.getElementById('divConsulta').innerHTML = '<p>'+entry.fullPath+'</p>'+'<img src="'+imagePath+'" alt="No cargó la imagen" class="fGaleria">'
+        var x = document.getElementById('divConsulta').innerHTML;
+        document.getElementById('divConsulta').innerHTML = x + '<p>'+entry.fullPath+'</p>'+'<img src="'+imagePath+'" onClick = "downloadLocation()" style="transform: rotate(90deg);" alt="No cargó la imagen" class="fGaleria"> <br>'
       }, function(error){
         alert("Error: "+ error.code);
       });
