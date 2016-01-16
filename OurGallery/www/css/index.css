@@ -120,12 +120,12 @@ h1 {
 
 #map{
 
-  width: 200px;
-  height: 200px;
+  width: 70px;
+  height: 70px;
 
   position:absolute;
-  left:55%;
-  top:75%;
+  left:75%;
+  top:83%;
 
   border: solid;
 

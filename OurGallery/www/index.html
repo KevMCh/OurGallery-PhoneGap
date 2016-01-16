@@ -28,9 +28,16 @@
 
       <!-- Página dos, menú -->
       <div data-role="page" id="pagetwo">
-
         <div data-role="header">
           <h1>Menú Principal</h1>
+          <div data-role="navbar">
+            <ul>
+              <li><a href="#pagetwo" data-icon="home"></a></li>
+              <li><a href="#panelDesc" data-icon="info"></a></li>
+              <li><a href="#pagethree" data-icon="camera" onclick="showPosition()"></a></li>
+              <li><a href="#pagefour" data-icon="cloud" onclick="downloadImages();"></a></li>
+            </ul>
+          </div>
         </div>
 
         <!-- Descripción de la aplicación -->
@@ -89,22 +96,23 @@
       <div data-role="page" id="pagethree">
 
         <div data-role="header">
-          <a href="#pagetwo" class="ui-btn ui-btn-left ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
           <h1>Sacar foto</h1>
+          <div data-role="navbar">
+            <ul>
+              <li><a href="#pagetwo" data-icon="home"></a></li>
+              <li><a href="#pagethree" data-icon="camera" onclick="showPosition()"></a></li>
+              <li><a href="#pagefour" data-icon="cloud" onclick="downloadImages();"></a></li>
+            </ul>
+          </div>
         </div>
-
         <section>
-
-
           <button id="capFoto" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto();"> Capturar Foto</button>
 
             <div> <img id="myImage" style="transform:  rotate(90deg);" src="" /> </div>
             <div class = "mapa" id="map"></div>
+            <br>
             <span>Usted se encuentra aquí: </span><p id = "geolocation"></p>
 
-          <div class= "footer" data-role="footer">
-            <p>Copyright © Todos los Derechos Reservados</p>
-          </div>
         </section>
 
       </div>
@@ -113,16 +121,18 @@
       <div data-role="page" id="pagefour" >
 
         <div data-role="header">
-          <a href="#pagetwo" class="ui-btn ui-btn-left ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left">Home</a>
           <h1>Mi Galería</h1>
+          <div data-role="navbar">
+            <ul>
+              <li><a href="#pagetwo" data-icon="home"></a></li>
+              <li><a href="#pagethree" data-icon="camera" onclick="showPosition()"></a></li>
+              <li><a href="#pagefour" data-icon="cloud" onclick="downloadImages();"></a></li>
+            </ul>
+          </div>
         </div>
 
         <h1> GALERÍA DE FOTOS </h1>
         <div id="divConsulta"></div>
-
-        <div class= "footer" data-role="footer">
-          <p>Copyright © Todos los Derechos Reservados</p>
-        </div>
 
       </div>
 
