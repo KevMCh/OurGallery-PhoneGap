@@ -33,9 +33,9 @@
           <div data-role="navbar">
             <ul>
               <li><a href="#pagetwo" data-icon="home"></a></li>
-              <li><a href="#panelDesc" data-icon="info"></a></li>
               <li><a href="#pagethree" data-icon="camera" onclick="showPosition()"></a></li>
               <li><a href="#pagefour" data-icon="cloud" onclick="downloadImages();"></a></li>
+              <li><a href="#panelDesc" data-icon="info"></a></li>
             </ul>
           </div>
         </div>
@@ -111,7 +111,7 @@
             <div> <img id="myImage" style="transform:  rotate(90deg);" src="" /> </div>
             <div class = "mapa" id="map"></div>
             <br>
-            <span>Usted se encuentra aquí: </span><p id = "geolocation"></p>
+            <span class="bold">Usted se encuentra aquí: </span><p id = "geolocation">Recuerde activar la "Ubicación"</p>
 
         </section>
 
@@ -132,9 +132,13 @@
         </div>
 
         <h1> GALERÍA DE FOTOS </h1>
+
+        <img id= "progress" src="./img/loader.gif" />
         <div id="divConsulta"></div>
 
       </div>
+
+
 
     <script type="text/javascript" src = "cordova.js"></script>
     </body>

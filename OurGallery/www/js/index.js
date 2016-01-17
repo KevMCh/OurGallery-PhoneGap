@@ -205,6 +205,7 @@ function downloadLocation(n){
 }
 
 function pasarVariable(urlBajar, n){
+
   var regexp = /^\s*([\w|\d]+\.jpg)\s([-+]?\d+(?:.\d+)?)\s([-+]?\d+(?:.\d+)?)\s*$/i;
   var m;
   var response;
@@ -225,6 +226,9 @@ function pasarVariable(urlBajar, n){
 
 //Descargar archivos
 function downloadImages(n) {
+
+  load();
+
   var URL = "http://photoprueba-ullalu.rhcloud.com";
   var fileName = n;
   //Parameters mismatch check
@@ -268,5 +272,20 @@ function download(URL,fileName) {
       }, function(error){
         alert("Error: "+ error.code);
       });
+  });
+}
+
+function load(){
+
+  if(document.getElementById("progress").classList.contains('ocul')){
+
+    document.getElementById("progress").classList.remove('vis');
+  }
+
+  document.getElementById("progress").classList.add('vis');
+
+  $(document).ajaxComplete(function(){
+      document.getElementById("progress").classList.remove('vis');
+      document.getElementById("progress").classList.add('ocul');
   });
 }

@@ -160,3 +160,14 @@ h1 {
 
   display:block;
 }
+
+#progress{
+
+  position: fixed;
+  z-index: 1;
+}
+
+.bold{
+
+  font-weight: bold;
+}
